@@ -1,8 +1,49 @@
+#
+# God bless git
+# Repository informations
+#
 
-# git repo infos
+# ------------------------------------------------------------------------------
+# Configuration
+# ------------------------------------------------------------------------------
+
+SPACESHIP_GBG_REPO_NAME_SHOW="${SPACESHIP_GBG_REPO_NAME_SHOW:-true}"
+SPACESHIP_GBG_REPO_MAIN_SYMBOL="${SPACESHIP_GBG_REPO_MAIN_SYMBOL:-" ${oct_octoface:-git} "}"
+SPACESHIP_GBG_REPO_STASH_SYMBOL="${SPACESHIP_GBG_REPO_STASH_SYMBOL:-"${fa_asterisk:-stash} "}"
+SPACESHIP_GBG_REPO_BG_COLOR="${SPACESHIP_GBG_REPO_BG_COLOR:-red}"
+SPACESHIP_GBG_REPO_FG_COLOR="${SPACESHIP_GBG_REPO_FG_COLOR:-white}"
+
+# ------------------------------------------------------------------------------
+# Helpers
+# ------------------------------------------------------------------------------
+
+spaceship_gbg_repo_init_symbols() {
+    l_spaceship_gbg_tmp=""
+    for l_symbol in \
+        "is_a_git_repo:${SPACESHIP_GBG_REPO_MAIN_SYMBOL}" \
+        "has_stashes:${SPACESHIP_GBG_REPO_STASH_SYMBOL}"; do
+        l_spaceship_gbg_tmp="$(\
+            printf '%s%s\036' \
+            "${l_spaceship_gbg_tmp}" \
+            "${l_symbol}")"
+    done
+    echo "${l_spaceship_gbg_tmp}"
+    unset l_spaceship_gbg_tmp l_symbol
+}
+SPACESHIP_GBG_REPO_SYMBOLS="$(spaceship_gbg_repo_init_symbols)\\n"
+
+# ------------------------------------------------------------------------------
+# Main
+# ------------------------------------------------------------------------------
+
 spaceship_gbg_repo() {
-  l_section_out=""
-  l_section_out="${l_section_out}$(\
+  [[ -n "${SPACESHIP_GBG_REPO_FG_COLOR}" ]] && fg_color="%F{${SPACESHIP_GBG_REPO_FG_COLOR}}" || fg_color="%f"
+  [[ -n "${SPACESHIP_GBG_REPO_BG_COLOR}" ]] && bg_color="%K{${SPACESHIP_GBG_REPO_BG_COLOR}}" || bg_color="%k"
+
+  [[ -n "${SPACESHIP_GBG_LAST_BG_COLOR}" ]] && lf_spaceship_gbg_close_segment "${SPACESHIP_GBG_REPO_BG_COLOR}"
+  l_section_out="%{${bg_color}${fg_color}%}" # Set colors
+
+  l_section_out="${l_section_out} $(\
     basename "${gbg_repo_top_level:-}"\
     )"
   l_section_out="${l_section_out}$(\
@@ -20,26 +61,7 @@ spaceship_gbg_repo() {
     )"
 
   printf '%s' "${l_section_out}"
+  unset l_section_out
+  SPACESHIP_GBG_LAST_BG_COLOR="${SPACESHIP_GBG_REPO_BG_COLOR}"
 }
 
-spaceship_gbg_init_repo_symbols() {
-    if [ -e "$HOME/.local/share/icons-in-terminal/icons_bash.sh" ]; then
-        debug "Loading icons in terminal"
-        #shellcheck disable=1090
-        . "$HOME/.local/share/icons-in-terminal/icons_bash.sh"
-    else
-        warning "GBG prompt heavily relies on icons-in-terminal"
-        warning "Please see https://github.com/sebastiencs/icons-in-terminal/"
-    fi
-    l_spaceship_gbg_tmp=""
-    for l_symbol in \
-        "is_a_git_repo: ${oct_octoface:-git}    " \
-        "has_stashes:${fa_asterisk:-stash} "; do
-        l_spaceship_gbg_tmp="$(\
-            printf '%s%s\036' \
-            "${l_spaceship_gbg_tmp}" \
-            "${l_symbol}")"
-    done
-    echo "${l_spaceship_gbg_tmp}"
-    unset l_spaceship_gbg_tmp l_symbol
-}
