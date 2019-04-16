@@ -23,11 +23,9 @@ spaceship_gbg_repo_init_symbols() {
         "is_a_git_repo:${SPACESHIP_GBG_REPO_MAIN_SYMBOL}" \
         "has_stashes:${SPACESHIP_GBG_REPO_STASH_SYMBOL}"; do
         l_spaceship_gbg_tmp="$(\
-            printf '%s%s\036' \
-            "${l_spaceship_gbg_tmp}" \
-            "${l_symbol}")"
+          spaceship_gbg_print "${l_spaceship_gbg_tmp}${l_symbol}"$'\036')"
     done
-    echo "${l_spaceship_gbg_tmp}"
+    spaceship_gbg_print "${l_spaceship_gbg_tmp}"
     unset l_spaceship_gbg_tmp l_symbol
 }
 SPACESHIP_GBG_REPO_SYMBOLS="$(spaceship_gbg_repo_init_symbols)\\n"
@@ -62,7 +60,7 @@ spaceship_gbg_repo() {
 
   l_section_out="${l_section_out}%{%f%k%}"
 
-  printf '%s' "${l_section_out}"
+  spaceship_gbg_print "${l_section_out}"
   unset l_section_out
   SPACESHIP_GBG_LAST_BG_COLOR="${SPACESHIP_GBG_REPO_BG_COLOR}"
 }

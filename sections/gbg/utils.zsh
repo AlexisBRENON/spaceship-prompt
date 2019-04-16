@@ -35,7 +35,7 @@ spaceship_gbg_init_git_symbols() {
     "${l_sterope_tmp}" \
     "${l_sterope_symbol}")"
 done
-printf '%s' "${l_sterope_tmp}"
+spaceship_gbg_print "${l_sterope_tmp}"
 unset l_sterope_tmp l_sterope_symbol
 }
 
@@ -44,18 +44,18 @@ lf_spaceship_gbg_enrich_append() {
   l_sterope_text=$2
   if [ "${l_sterope_flag}" != "true" ]; then
     l_sterope_text="$(\
-      echo "${l_sterope_text}" | \
+      spaceship_gbg_print "${l_sterope_text}" | \
       sed 's/./ /g'\
       )"
   fi
 
-  printf '%s' "${l_sterope_text}"
+  spaceship_gbg_print "${l_sterope_text}"
 }
 
 lf_spaceship_gbg_get_symbol() {
   l_gbg_symbols="$1"
   l_gbg_field="$2"
-  printf '%s' "${l_gbg_symbols}" | \
+  spaceship_gbg_print "${l_gbg_symbols}" | \
     tr '[[:cntrl:]]' $'\n' | \
     grep "^${l_gbg_field}:" | \
     sed -e 's/^'"${l_gbg_field}"':\(.*\)/\1/'
@@ -66,10 +66,11 @@ lf_spaceship_gbg_close_segment() {
   [[ -n "${SPACESHIP_GBG_LAST_BG_COLOR}" ]] && fg_color="%F{${SPACESHIP_GBG_LAST_BG_COLOR}}" || fg_color="%f"
   [[ -n "$1" ]] && bg_color="%K{$1}" || bg_color="%k"
 
-  printf '%s%s%s' \
-    "%{${bg_color}${fg_color}%}" \
-    "${SPACESHIP_GBG_SEPARATOR_SYMBOL}" \
-    "%{%b%f%}"
+  spaceship_gbg_print "%{${bg_color}${fg_color}%}${SPACESHIP_GBG_SEPARATOR_SYMBOL}%{%b%f%}"
+}
+
+spaceship_gbg_print() {
+  [[ "${SPACESHIP_GBG_ADVANCED_USE_ECHO}" = "true" ]] && echo -n $@ || printf '%s' $@
 }
 
 
