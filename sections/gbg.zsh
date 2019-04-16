@@ -17,7 +17,7 @@ SPACESHIP_GBG_SUFFIX="${SPACESHIP_GBG_SUFFIX="$SPACESHIP_PROMPT_DEFAULT_SUFFIX\n
 SPACESHIP_GBG_SEPARATOR_SYMBOL=${SPACESHIP_GBG_SEPARATOR_SYMBOL:-"$(echo "${powerline_left_hard_divider:-▓▒░} ")"}
 
 #SPACESHIP_GBG_ORDER="${SPACESHIP_GBG_ORDER:-"repo:local:index:remote:tag"}"
-SPACESHIP_GBG_ORDER="${SPACESHIP_GBG_ORDER:-"repo"}"
+SPACESHIP_GBG_ORDER="${SPACESHIP_GBG_ORDER:-"repo:local"}"
 
 # ------------------------------------------------------------------------------
 # Dependencies
