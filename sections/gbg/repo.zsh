@@ -10,8 +10,8 @@
 SPACESHIP_GBG_REPO_NAME_SHOW="${SPACESHIP_GBG_REPO_NAME_SHOW:-true}"
 SPACESHIP_GBG_REPO_MAIN_SYMBOL="${SPACESHIP_GBG_REPO_MAIN_SYMBOL:-" ${oct_octoface:-git} "}"
 SPACESHIP_GBG_REPO_STASH_SYMBOL="${SPACESHIP_GBG_REPO_STASH_SYMBOL:-"${fa_asterisk:-stash} "}"
-SPACESHIP_GBG_REPO_BG_COLOR="${SPACESHIP_GBG_REPO_BG_COLOR:-red}"
-SPACESHIP_GBG_REPO_FG_COLOR="${SPACESHIP_GBG_REPO_FG_COLOR:-white}"
+SPACESHIP_GBG_REPO_BG_COLOR="${SPACESHIP_GBG_REPO_BG_COLOR:-white}"
+SPACESHIP_GBG_REPO_FG_COLOR="${SPACESHIP_GBG_REPO_FG_COLOR:-black}"
 
 # ------------------------------------------------------------------------------
 # Helpers
@@ -37,10 +37,10 @@ SPACESHIP_GBG_REPO_SYMBOLS="$(spaceship_gbg_repo_init_symbols)\\n"
 # ------------------------------------------------------------------------------
 
 spaceship_gbg_repo() {
+  [[ -n "${SPACESHIP_GBG_LAST_BG_COLOR}" ]] && lf_spaceship_gbg_close_segment "${SPACESHIP_GBG_REPO_BG_COLOR}"
   [[ -n "${SPACESHIP_GBG_REPO_FG_COLOR}" ]] && fg_color="%F{${SPACESHIP_GBG_REPO_FG_COLOR}}" || fg_color="%f"
   [[ -n "${SPACESHIP_GBG_REPO_BG_COLOR}" ]] && bg_color="%K{${SPACESHIP_GBG_REPO_BG_COLOR}}" || bg_color="%k"
 
-  [[ -n "${SPACESHIP_GBG_LAST_BG_COLOR}" ]] && lf_spaceship_gbg_close_segment "${SPACESHIP_GBG_REPO_BG_COLOR}"
   l_section_out="%{${bg_color}${fg_color}%}" # Set colors
 
   l_section_out="${l_section_out} $(\
@@ -59,6 +59,8 @@ spaceship_gbg_repo() {
         "${SPACESHIP_GBG_REPO_SYMBOLS}" \
         has_stashes)"\
     )"
+
+  l_section_out="${l_section_out}%{%f%k%}"
 
   printf '%s' "${l_section_out}"
   unset l_section_out

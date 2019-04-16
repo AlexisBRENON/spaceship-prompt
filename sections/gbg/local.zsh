@@ -11,7 +11,7 @@ SPACESHIP_GBG_LOCAL_UNTRACKED_SYMBOL="${SPACESHIP_GBG_LOCAL_UNTRACKED_SYMBOL:-"$
 SPACESHIP_GBG_LOCAL_MODIFIED_SYMBOL="${SPACESHIP_GBG_LOCAL_MODIFIED_SYMBOL:-"${fa_pencil:-M} "}"
 SPACESHIP_GBG_LOCAL_DELETED_SYMBOL="${SPACESHIP_GBG_LOCAL_DELETED_SYMBOL:-"${fa_minus:-D} "}"
 SPACESHIP_GBG_LOCAL_BG_COLOR="${SPACESHIP_GBG_LOCAL_BG_COLOR:-white}"
-SPACESHIP_GBG_LOCAL_FG_COLOR="${SPACESHIP_GBG_LOCAL_FG_COLOR:-black}"
+SPACESHIP_GBG_LOCAL_FG_COLOR="${SPACESHIP_GBG_LOCAL_FG_COLOR:-red}"
 
 # ------------------------------------------------------------------------------
 # Helpers
@@ -38,10 +38,10 @@ SPACESHIP_GBG_LOCAL_SYMBOLS="$(spaceship_gbg_local_init_symbols)\\n"
 # ------------------------------------------------------------------------------
 
 spaceship_gbg_local() {
+  [[ -n "${SPACESHIP_GBG_LAST_BG_COLOR}" ]] && lf_spaceship_gbg_close_segment "${SPACESHIP_GBG_LOCAL_BG_COLOR}"
   [[ -n "${SPACESHIP_GBG_LOCAL_FG_COLOR}" ]] && fg_color="%F{${SPACESHIP_GBG_LOCAL_FG_COLOR}}" || fg_color="%f"
   [[ -n "${SPACESHIP_GBG_LOCAL_BG_COLOR}" ]] && bg_color="%K{${SPACESHIP_GBG_LOCAL_BG_COLOR}}" || bg_color="%k"
 
-  [[ -n "${SPACESHIP_GBG_LAST_BG_COLOR}" ]] && lf_spaceship_gbg_close_segment "${SPACESHIP_GBG_LOCAL_BG_COLOR}"
   l_section_out="%{${bg_color}${fg_color}%}" # Set colors
 
   l_section_out="${l_section_out}$(\
@@ -65,6 +65,8 @@ spaceship_gbg_local() {
           "${SPACESHIP_GBG_LOCAL_SYMBOLS}" \
           has_workspace_dels)"\
     )"
+
+  l_section_out="${l_section_out}%{%f%k%}"
 
   printf '%s' "${l_section_out}"
   unset l_section_out
