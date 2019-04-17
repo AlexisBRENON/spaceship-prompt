@@ -12,6 +12,7 @@ SPACESHIP_GBG_REMOTE_UNTRACKED_SYMBOL="${SPACESHIP_GBG_REMOTE_UNTRACKED_SYMBOL:-
 SPACESHIP_GBG_REMOTE_DIVERGED_SYMBOL="${SPACESHIP_GBG_REMOTE_DIVERGED_SYMBOL:-"${oct_repo_forked:-Y} "}"
 SPACESHIP_GBG_REMOTE_FF_SYMBOL="${SPACESHIP_GBG_REMOTE_FF_SYMBOL:-"${md_fast_forward:-">>"} "}"
 SPACESHIP_GBG_REMOTE_PUSH_SYMBOL="${SPACESHIP_GBG_REMOTE_PUSH_SYMBOL:-"${oct_cloud_upload:-"->"} "}"
+SPACESHIP_GBG_REMOTE_TRACKING_SYMBOL_MERGE="${SPACESHIP_GBG_REMOTE_TRACKING_SYMBOL_MERGE:-"${oct_git_merge:-"|\\"} "}"
 SPACESHIP_GBG_REMOTE_BG_COLOR="${SPACESHIP_GBG_REMOTE_BG_COLOR:-magenta}"
 SPACESHIP_GBG_REMOTE_FG_COLOR="${SPACESHIP_GBG_REMOTE_FG_COLOR:-white}"
 
@@ -26,7 +27,8 @@ spaceship_gbg_remote_init_symbols() {
       "not_tracked:${SPACESHIP_GBG_REMOTE_UNTRACKED_SYMBOL}" \
       "has_diverged:${SPACESHIP_GBG_REMOTE_DIVERGED_SYMBOL}" \
       "can_ff:${SPACESHIP_GBG_REMOTE_FF_SYMBOL}" \
-      "should_push:${SPACESHIP_GBG_REMOTE_PUSH_SYMBOL}"; do
+      "should_push:${SPACESHIP_GBG_REMOTE_PUSH_SYMBOL}" \
+      "merge_tracking:${SPACESHIP_GBG_REMOTE_TRACKING_SYMBOL_MERGE}"; do
         l_spaceship_gbg_tmp="$(\
           spaceship_gbg_print "${l_spaceship_gbg_tmp}${l_symbol}"$'\036')"
     done
