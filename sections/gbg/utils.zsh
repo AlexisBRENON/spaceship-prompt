@@ -66,7 +66,7 @@ lf_spaceship_gbg_close_segment() {
   [[ -n "${SPACESHIP_GBG_LAST_BG_COLOR}" ]] && fg_color="%F{${SPACESHIP_GBG_LAST_BG_COLOR}}" || fg_color="%f"
   [[ -n "$1" ]] && bg_color="%K{$1}" || bg_color="%k"
 
-  spaceship_gbg_print "%{${bg_color}${fg_color}%}${SPACESHIP_GBG_SEPARATOR_SYMBOL}%{%k%f%}"
+  spaceship_gbg_print "%{${bg_color}${fg_color}%}${SPACESHIP_GBG_SEPARATOR_SYMBOL} %{%k%f%}"
 }
 
 spaceship_gbg_print() {
