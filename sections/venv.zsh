@@ -14,7 +14,8 @@ SPACESHIP_VENV_SUFFIX="${SPACESHIP_VENV_SUFFIX="$SPACESHIP_PROMPT_DEFAULT_SUFFIX
 SPACESHIP_VENV_SYMBOL="${SPACESHIP_VENV_SYMBOL=""}"
 # The (A) expansion flag creates an array, the '=' activates word splitting
 SPACESHIP_VENV_GENERIC_NAMES="${(A)=SPACESHIP_VENV_GENERIC_NAMES=virtualenv venv .venv}"
-SPACESHIP_VENV_COLOR="${SPACESHIP_VENV_COLOR="blue"}"
+SPACESHIP_VENV_COLOR_BG="${SPACESHIP_VENV_COLOR_BG=""}"
+SPACESHIP_VENV_COLOR_FG="${SPACESHIP_VENV_COLOR_FG="blue"}"
 
 # ------------------------------------------------------------------------------
 # Section
@@ -37,9 +38,19 @@ spaceship_venv() {
     venv="$VIRTUAL_ENV:t"
   fi
 
+  local 'pyversion'
+  pyversion="$(\
+    python --version 2>&1 | \
+    cut -d' ' -f2 \
+    )"
+
+[[ -n "${SPACESHIP_VENV_COLOR_BG}" ]] && bg_color="%K{${SPACESHIP_VENV_COLOR_BG}}" || bg_color="%k"
+
+echo -n "%{${bg_color}%}"
 spaceship::section \
-    "$SPACESHIP_VENV_COLOR" \
+    "$SPACESHIP_VENV_COLOR_FG" \
     "$SPACESHIP_VENV_PREFIX" \
-    "${SPACESHIP_VENV_SYMBOL}${venv}" \
+    "${SPACESHIP_VENV_SYMBOL}${venv} (${pyversion})" \
     "$SPACESHIP_VENV_SUFFIX"
+echo -n "%{%k%}"
 }
